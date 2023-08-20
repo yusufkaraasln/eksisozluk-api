@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/header/**").permitAll()
                         .requestMatchers("/api/v1/user/**").hasRole(UserType.ADMIN.getValue()))
 
 

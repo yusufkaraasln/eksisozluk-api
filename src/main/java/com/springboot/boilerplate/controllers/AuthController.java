@@ -1,5 +1,6 @@
 package com.springboot.boilerplate.controllers;
 
+import com.springboot.boilerplate.entities.User;
 import com.springboot.boilerplate.requests.SignInRequest;
 import com.springboot.boilerplate.requests.SignUpRequest;
 import com.springboot.boilerplate.services.AuthService;
@@ -35,7 +36,7 @@ public class AuthController {
     @PostMapping("/sign-up")
     public ResponseEntity register(@RequestBody SignUpRequest body)  {
         try {
-            Result<String> result = authService.signup(body.getEmail(), body.getPassword(), body.getName(), body.getSurname(), body.getUsername());
+            Result<User> result = authService.signup(body.getEmail(), body.getPassword(), body.getName(), body.getSurname(), body.getUsername());
             return ResponseEntity.ok(result);
         } catch ( RuntimeException e) {
             return ResponseEntity.badRequest().body(new Result<>(false, "error", "User already exists"));

@@ -6,6 +6,8 @@ import com.springboot.boilerplate.enums.UserType;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Entity
 @Data
 @Table(name = "users")
@@ -17,12 +19,11 @@ public class User {
     @Column(name = "id")
     private Integer id;
 
+    @Column(unique = true, name = "username")
+
     private String username;
-
     private String name;
-
     private String surname;
-
     private String email;
 
 
@@ -31,5 +32,11 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
+
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Entry> entries;
+
 
 }
