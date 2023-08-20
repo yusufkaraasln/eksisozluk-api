@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 
@@ -75,14 +76,14 @@ public class AuthService {
         user.setName(name);
         user.setSurname(surname);
         user.setUserType(UserType.USER);
-        user.setEntries(new HashSet<>());
+        user.setEntries(new ArrayList<>());
         userRepository.save(user);
 
         return new Result<>(true, "success", user);
 
     }
 
-    public Result<User> getUser(){
+    public Result<User> getUser() {
         int user_id = Integer.parseInt((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         Optional<User> user = userRepository.findById(user_id);
         if (user.isEmpty()) throw new EntityNotFoundException("Kullanıcı bulunamadı");

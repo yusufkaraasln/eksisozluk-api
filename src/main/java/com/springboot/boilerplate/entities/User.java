@@ -6,6 +6,7 @@ import com.springboot.boilerplate.enums.UserType;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,7 +37,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private Set<Entry> entries;
+    private List<Entry> entries;
 
 
 }
