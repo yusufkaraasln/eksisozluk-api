@@ -43,4 +43,47 @@ public class EntryService {
     }
 
 
+    public Result<Entry> getEntry(int id) {
+
+        Entry entry = entryRepository.findById(id).get();
+        return new Result<>(true, "success", entry);
+
+    }
+
+    public Result<Entry> deleteEntry(int id) {
+
+        User user = authService.getUser().getData();
+        Entry entry = entryRepository.findById(id).get();
+        if (user.getId() != entry.getUser().getId()) {
+            return new Result<>(false, "unauthorized", null);
+        } else if (entry == null) {
+            return new Result<>(false, "entry not found", null);
+        }
+
+
+        entryRepository.delete(entry);
+        return new Result<>(true, "success", entry);
+    }
+
+    public Result<Entry> updateEntry(int id, Entry body) {
+
+        User user = authService.getUser().getData();
+        Entry entry = entryRepository.findById(id).get();
+        if (user.getId() != entry.getUser().getId()) {
+            return new Result<>(false, "unauthorized", null);
+        } else if (entry == null) {
+            return new Result<>(false, "entry not found", null);
+
+
+        }
+        entry.setContent(body.getContent());
+        entry.setUpdatedAt(new Date());
+        entryRepository.save(entry);
+
+        return new Result<>(true, "success", entry);
+
+
+    }
+
+
 }
